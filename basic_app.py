@@ -6,7 +6,7 @@ app = QApplication([])
 # Criar uma janela principal
 janela = QWidget()
 janela.setWindowTitle("Printaí")
-janela.setGeometry(100, 100, 400, 300)  # posição x, y e tamanho w x h
+janela.setGeometry(500, 300, 400, 300)  # posição x, y e tamanho w x h
 
 # Adicionar um widget (ex.: label)
 label = QLabel("Aqui é a Printaí", janela)
