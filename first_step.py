@@ -1,32 +1,37 @@
 from fpdf import FPDF
 
-def ler_numero(prompt):
-    v = input(prompt + " ")
-    v = v.replace(',', '.').strip()
-    return float(v)
+# Função auxiliar para adicionar linhas na tabela
+def adicionar_linha(pdf, dados, larguras, multiline_idx=None):
+    if multiline_idx is None:
+        multiline_idx = []
 
-def coletar_pecas():
-    pecas = []
-    while True:
-        print("\n--- Nova peça ---")
-        nome = input("Nome da peça: ")
-        filamento = input("Tipo/Cor Filamento: ")
-        tempo = input("Tempo de impressão: ")
-        peso = input("Peso estimado (g): ")
-        materia = ler_numero("Matéria Prima (R$):")
-        pecas.append({'nome': nome, 'filamento': filamento, 'tempo': tempo, 'peso': peso, 'materia': materia})
+    x, y = pdf.get_x(), pdf.get_y()  # posição inicial
+    altura = 10
+    max_y = y
 
-        add = input("Adicionar outra peça? (s/n): ").lower()
-        if add == 'n':
-            break
-    return pecas
+    for i, (valor, largura) in enumerate(zip(dados, larguras)):
+        if i in multiline_idx:
+            pdf.multi_cell(largura, altura, str(valor), border=1, align="C")
+            max_y = max(max_y, pdf.get_y())
+            pdf.set_xy(x + largura, y)
+        else:
+            pdf.cell(largura, altura, str(valor), border=1, align="C")
+        x += largura
+    pdf.set_xy(pdf.get_x() - sum(larguras), max_y)
 
-def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total):
+# Função para gerar o PDF
+def gerar_pdf(titulo, pecas, soma, arte, total, logo_path=None):
     pdf = FPDF()
     pdf.add_page()
+
+    # Cabeçalho
     pdf.set_font("Arial", "B", 16)
     pdf.cell(0, 10, "Homemade3D", ln=1, align="C")
-    pdf.set_font("Arial", "", 12)
+
+    if logo_path:
+        pdf.image(logo_path, x=10, y=8, w=20)
+
+    pdf.set_font("Arial", "B", 12)
     pdf.cell(0, 10, f"Projeto: {titulo}", ln=1, align="C")
     pdf.ln(10)
 
@@ -35,42 +40,62 @@ def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total):
     colunas = ["Peça", "Filamento", "Tempo", "Peso (g)", "Matéria Prima (R$)"]
     larguras = [40, 40, 30, 30, 40]
     for col, largura in zip(colunas, larguras):
-        pdf.cell(largura, 10, col, 1, 0, "C")
+        pdf.cell(largura, 10, col, border=1, align="C")
     pdf.ln()
 
-    # Linhas da tabela
+    # Conteúdo da tabela
     pdf.set_font("Arial", "", 10)
-    for p in pecas:
-        pdf.cell(40, 10, p['nome'], 1)
-        pdf.cell(40, 10, p['filamento'], 1)
-        pdf.cell(30, 10, p['tempo'], 1)
-        pdf.cell(30, 10, str(p['peso']), 1)
-        pdf.cell(40, 10, f"R$ {p['materia']:.2f}", 1, ln=1)
+    for peca in pecas:
+        dados = [
+            peca['nome'], 
+            peca['filamento'], 
+            peca['tempo'], 
+            peca['peso'], 
+            f"R$ {peca['materia']:.2f}"
+        ]
+        adicionar_linha(pdf, dados, larguras, multiline_idx=[0,1,4])
 
-    # Totais
-    pdf.cell(140, 10, "Total Matéria Prima", 1)
-    pdf.cell(40, 10, f"R$ {soma_materia:.2f}", 1, ln=1)
+    # Linhas finais de resumo
+    pdf.ln(5)
+    pdf.cell(0, 10, f"Total Matéria Prima: R$ {soma:.2f}", ln=1, align="C")
+    pdf.cell(0, 10, f"Arte aplicada: R$ {arte:.2f}", ln=1, align="C")
+    pdf.cell(0, 10, f"Investimento Total: R$ {total:.2f}", ln=1, align="C")
 
-    pdf.cell(140, 10, "Arte aplicada", 1)
-    pdf.cell(40, 10, f"R$ {arte_aplicada:.2f}", 1, ln=1)
+    # Salvar PDF
+    nome_arquivo = f"Homemade3D - {titulo}.pdf"
+    pdf.output(nome_arquivo)
+    print(f"PDF gerado: {nome_arquivo}")
 
-    pdf.cell(140, 10, "Investimento Total", 1)
-    pdf.cell(40, 10, f"R$ {total:.2f}", 1, ln=1)
-
-    pdf.output(f"Homemade3D - {titulo}.pdf")
-
+# Loop de entrada interativa
 def main():
+    pecas = []
     titulo = input("Título do projeto: ")
-    pecas = coletar_pecas()
-    soma = sum(p['materia'] for p in pecas)
-    arte = ler_numero("Valor da Arte aplicada (R$):")
-    total = soma + arte
-    print(f"\nResumo: Matéria Prima = R$ {soma:.2f}, Arte = R$ {arte:.2f}, Totsal = R$ {total:.2f}")
 
-    gerar = input("Gerar PDF? (s/n): ").lower()
-    if gerar == 's':
-        gerar_pdf(titulo, pecas, soma, arte, total)
-        print(f"PDF gerado: Homemade3D - {titulo}.pdf")
+    while True:
+        print("\n--- Nova peça ---")
+        nome = input("Nome da peça: ")
+        filamento = input("Tipo/Cor Filamento: ")
+        tempo = input("Tempo de impressão: ")
+        peso = float(input("Peso estimado (g): "))
+        materia = float(input("Matéria Prima (R$): ").replace(",", "."))
+
+        pecas.append({
+            "nome": nome,
+            "filamento": filamento,
+            "tempo": tempo,
+            "peso": peso,
+            "materia": materia
+        })
+
+        cont = input("Adicionar outra peça? (s/n): ").lower()
+        if cont != "s":
+            break
+
+    arte = float(input("Valor da Arte aplicada (R$): ").replace(",", "."))
+    soma = sum(p['materia'] for p in pecas)
+    total = soma + arte
+
+    gerar_pdf(titulo, pecas, soma, arte, total, logo_path=None)
 
 if __name__ == "__main__":
     main()
