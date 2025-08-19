@@ -224,7 +224,7 @@ Sugestão: **MIT License**. (Ajuste conforme sua preferência.)
 
 ## 👤 Autor
 
-* **Pablo Lacerda Cassani** — *Homemade3D*
+* **Pablo Lacerda Casagni** — *Homemade3D*
 
 ---
 
