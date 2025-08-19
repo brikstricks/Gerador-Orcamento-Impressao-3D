@@ -7,15 +7,15 @@ def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path
 
     # Cabeçalho com logo centralizado
     if logo_path:
-        logo_w = 30  # largura em mm
+        logo_w = 50  # largura em mm
         pdf.set_y(10)
         pdf.set_x((210 - logo_w) / 2)  # centraliza horizontal (A4 = 210 mm)
         pdf.image(logo_path, w=logo_w)
-        pdf.ln(logo_w * 0.6)  # espaço abaixo da logo
+        pdf.ln(logo_w * 0.2)  # espaço abaixo da logo
 
     # Título do cabeçalho
     pdf.set_font("Arial", "B", 16)
-    pdf.cell(0, 10, "Homemade3D", ln=1, align="C")
+    pdf.cell(0, 10, "Printaí", ln=1, align="C")
     pdf.set_font("Arial", "B", 12)
     pdf.cell(0, 10, f"Projeto: {titulo}", ln=1, align="C")
     pdf.ln(5)
@@ -53,8 +53,8 @@ def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path
 
     # Salvar PDF com data/hora
     agora = datetime.now()
-    timestamp = agora.strftime("%Y-%m-%d_%H-%M-%S")  # exemplo: 2025-08-19_14-30-00
-    arquivo_saida = f"Homemade3D - {titulo} - {timestamp}.pdf"
+    timestamp = agora.strftime("%d-%m-%Y_%H-%M-%S")  # exemplo: 19-08-2025_14-30-00
+    arquivo_saida = f"Printaí - {titulo} - {timestamp}.pdf"
     pdf.output(arquivo_saida)
     print(f"PDF gerado: {arquivo_saida}")
 
@@ -94,7 +94,6 @@ while True:
 soma_materia = sum(p['materia'] for p in pecas)
 arte_aplicada = float(input("Valor da Arte aplicada (R$): ").replace(",", "."))
 total_final = soma_materia + arte_aplicada
-
 # -------------------------------
 # Geração do PDF
 # -------------------------------
