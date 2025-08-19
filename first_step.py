@@ -97,4 +97,4 @@ total_final = soma_materia + arte_aplicada
 # -------------------------------
 # Geração do PDF
 # -------------------------------
-gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path="printaí_3d.png")
+gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path="fundo_branco.jpg")
