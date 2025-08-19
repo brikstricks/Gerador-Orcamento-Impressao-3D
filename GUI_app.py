@@ -18,7 +18,7 @@ app = QApplication([])
 #Janela Principal
 window = QWidget()
 window.setWindowTitle("Orcamentos Printaí 3D")
-window.setGeometry(300, 300, 600, 500) # posição e tamanho da janela
+window.setGeometry(500, 300, 600, 500) # posição e tamanho da janela
 
 #Layout vertical
 layout = QVBoxLayout()
