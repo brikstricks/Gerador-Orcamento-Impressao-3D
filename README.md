@@ -107,7 +107,7 @@ O programa irá:
 6. Salvar o arquivo como:
 
    ```
-   Homemade3D - <Título do projeto>.pdf
+   Printaí 3D - <Título do projeto>.pdf
    ```
 
 ---
@@ -125,7 +125,7 @@ O programa irá:
 
 ## 🧾 Formato do PDF
 
-* **Cabeçalho**: `Homemade3D` (centralizado) + `Projeto: <Título>`.
+* **Cabeçalho**: `Printaí 3D` (centralizado) + `Projeto: <Título>`.
 * **Tabela** (largura fixa por coluna) com as 5 colunas definidas.
 * **Linhas finais**:
 
@@ -171,7 +171,7 @@ Valor da Arte aplicada (R$): 35,00
 
 Resumo: Matéria Prima = R$ 30,50, Arte = R$ 35,00, Total = R$ 65,50
 Gerar PDF? (s/n): s
-PDF gerado: Homemade3D - Suporte de Parede PS5.pdf
+PDF gerado: Printaí 3D - Suporte de Parede PS5.pdf
 ```
 
 ---
@@ -219,7 +219,7 @@ Sugestão: **MIT License**. (Ajuste conforme sua preferência.)
 
 ## 👤 Autor
 
-* **Pablo Lacerda Casagni** — *Homemade3D*
+* **Pablo Lacerda Casagni** — *Printaí 3D*
 
 ---
 
