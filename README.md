@@ -1,6 +1,6 @@
-# Homemade3D — Gerador de Orçamentos (PDF)
+# Printaí 3D — Gerador de Orçamentos (PDF)
 
-Script em **Python** para coletar dados de peças de impressão 3D, somar **Matéria Prima**, adicionar **Arte aplicada** (mão de obra) e gerar um **relatório em PDF** com cabeçalho *Homemade3D* e **título do projeto**.
+Script em **Python** para coletar dados de peças de impressão 3D, somar **Matéria Prima**, adicionar **Arte aplicada** (mão de obra) e gerar um **relatório em PDF** com cabeçalho *Printaí 3D* e **título do projeto**.
 
 ---
 
@@ -16,11 +16,6 @@ Script em **Python** para coletar dados de peças de impressão 3D, somar **Mat�
 
 ## 📂 Estrutura sugerida do projeto
 
-```
-Automação Python/
-├─ first_step.py           # script principal
-├─ requirements.txt        # dependências do projeto
-└─ README.md               # este arquivo
 ```
 
 > **Observação:** o nome da pasta pode conter espaços (ex.: `Automação Python`). No PowerShell, se precisar referenciar o caminho completo, use aspas: `"P:\Automação Python\venv\Scripts\Activate.ps1"`.
@@ -112,7 +107,7 @@ O programa irá:
 6. Salvar o arquivo como:
 
    ```
-   Homemade3D - <Título do projeto>.pdf
+   Printaí 3D - <Título do projeto>.pdf
    ```
 
 ---
@@ -130,7 +125,7 @@ O programa irá:
 
 ## 🧾 Formato do PDF
 
-* **Cabeçalho**: `Homemade3D` (centralizado) + `Projeto: <Título>`.
+* **Cabeçalho**: `Printaí 3D` (centralizado) + `Projeto: <Título>`.
 * **Tabela** (largura fixa por coluna) com as 5 colunas definidas.
 * **Linhas finais**:
 
@@ -176,7 +171,7 @@ Valor da Arte aplicada (R$): 35,00
 
 Resumo: Matéria Prima = R$ 30,50, Arte = R$ 35,00, Total = R$ 65,50
 Gerar PDF? (s/n): s
-PDF gerado: Homemade3D - Suporte de Parede PS5.pdf
+PDF gerado: Printaí 3D - Suporte de Parede PS5.pdf
 ```
 
 ---
@@ -224,7 +219,7 @@ Sugestão: **MIT License**. (Ajuste conforme sua preferência.)
 
 ## 👤 Autor
 
-* **Pablo Lacerda Casagni** — *Homemade3D*
+* **Pablo Lacerda Casagni** — *Printaí 3D*
 
 ---
 
