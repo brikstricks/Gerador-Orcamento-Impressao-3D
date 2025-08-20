@@ -7,8 +7,32 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon, QDoubleValidator
+from PySide6.QtCore import Qt, QLocale
+from PySide6.QtWidgets import QStyledItemDelegate, QLineEdit
+
+# Locale pt-BR para toda a app (aceita vírgula no validator)
+QLocale.setDefault(QLocale(QLocale.Portuguese, QLocale.Brazil))
 
 import first_step  # nosso módulo de PDF (gerar_pdf)
+
+class NumericDelegate(QStyledItemDelegate):
+    def __init__(self, decimals=2, allow_negative=False, parent=None):
+        super().__init__(parent)
+        self.decimals = decimals
+        self.allow_negative = allow_negative
+
+    def createEditor(self, parent, option, index):
+        editor = QLineEdit(parent)
+        validator = QDoubleValidator(editor)
+        validator.setDecimals(self.decimals)
+        validator.setNotation(QDoubleValidator.StandardNotation)
+        if not self.allow_negative:
+            validator.setBottom(0.0)  # >= 0
+        # MUITO IMPORTANTE: usar locale pt-BR pra aceitar vírgula
+        validator.setLocale(QLocale())
+        editor.setValidator(validator)
+        return editor
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -38,6 +62,8 @@ class MainWindow(QMainWindow):
 
         # --- Tabela de peças ---
         self.table = QTableWidget(0, 5)
+        self.table.setItemDelegateForColumn(3, NumericDelegate(decimals=3))  # Peso (g)
+        self.table.setItemDelegateForColumn(4, NumericDelegate(decimals=2))  # Matéria Prima (R$)
         self.table.setHorizontalHeaderLabels(["Peça", "Filamento", "Tempo", "Peso (g)", "Matéria Prima (R$)"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setVisible(False)

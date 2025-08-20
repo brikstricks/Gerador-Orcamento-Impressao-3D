@@ -15,7 +15,14 @@ def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path
       - logo_path (str|None): caminho de arquivo da logo (opcional)
     Retorna:
       - caminho do arquivo PDF gerado (str)
+
     """
+    # Formatação para moeda PT-BR
+    def format_brl(valor:float) -> str:
+        #sem depender de locale do SO
+        s = f"{valor:.2f}"
+        return "R$" + s.replace(",", "X").replace(".", ",").replace("X", ".")
+
     pdf = FPDF()
     pdf.add_page()
 
@@ -64,15 +71,15 @@ def gerar_pdf(titulo, pecas, soma_materia, arte_aplicada, total_final, logo_path
         pdf.set_xy(x_inicio + larguras[0] + larguras[1], y_inicio)
         pdf.cell(larguras[2], 10, str(p.get('tempo', '')), border=1, align="C")
         pdf.cell(larguras[3], 10, f"{float(p.get('peso', 0)):.0f}", border=1, align="C")
-        pdf.multi_cell(larguras[4], 10, f"R$ {float(p.get('materia', 0)):.2f}", border=1, align="C")
+        pdf.multi_cell(larguras[4], 10, format_brl(float(p.get('materia', 0))), border=1, align="C")
         pdf.ln(0)
 
     # Linhas finais centralizadas
     pdf.ln(5)
     pdf.set_font("Arial", "B", 11)
-    pdf.cell(0, 8, f"Total Matéria Prima: R$ {soma_materia:.2f}", ln=1, align="C")
-    pdf.cell(0, 8, f"Arte aplicada: R$ {arte_aplicada:.2f}", ln=1, align="C")
-    pdf.cell(0, 10, f"Investimento Total: R$ {total_final:.2f}", ln=1, align="C")
+    pdf.cell(0, 8, f"Total Matéria Prima: {format_brl(soma_materia)}", ln=1, align="C")
+    pdf.cell(0, 8, f"Arte aplicada: {format_brl(arte_aplicada)}", ln=1, align="C")
+    pdf.cell(0, 10, f"Investimento Total: {format_brl(total_final)}", ln=1, align="C")
 
     # Salvar PDF com data/hora no nome
     timestamp = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
