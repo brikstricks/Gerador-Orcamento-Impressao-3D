@@ -1,6 +1,6 @@
-# Homemade3D — Gerador de Orçamentos (PDF)
+# Printaí 3D — Gerador de Orçamentos (PDF)
 
-Script em **Python** para coletar dados de peças de impressão 3D, somar **Matéria Prima**, adicionar **Arte aplicada** (mão de obra) e gerar um **relatório em PDF** com cabeçalho *Homemade3D* e **título do projeto**.
+Script em **Python** para coletar dados de peças de impressão 3D, somar **Matéria Prima**, adicionar **Arte aplicada** (mão de obra) e gerar um **relatório em PDF** com cabeçalho *Printaí 3D* e **título do projeto**.
 
 ---
 
@@ -16,11 +16,6 @@ Script em **Python** para coletar dados de peças de impressão 3D, somar **Mat�
 
 ## 📂 Estrutura sugerida do projeto
 
-```
-Automação Python/
-├─ first_step.py           # script principal
-├─ requirements.txt        # dependências do projeto
-└─ README.md               # este arquivo
 ```
 
 > **Observação:** o nome da pasta pode conter espaços (ex.: `Automação Python`). No PowerShell, se precisar referenciar o caminho completo, use aspas: `"P:\Automação Python\venv\Scripts\Activate.ps1"`.
