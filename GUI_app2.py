@@ -19,7 +19,7 @@ class OrcamentoPrintai3D(QMainWindow):
     def init_ui(self):
         """Inicializa a interface do usuário"""
         self.setWindowTitle("Printaí 3D - Sistema de Orçamentos")
-        self.setGeometry(300, 100, 1000, 700)
+        self.setGeometry(100, 100, 1000, 700)
         
         # Widget principal
         main_widget = QWidget()
@@ -294,8 +294,12 @@ class OrcamentoPrintai3D(QMainWindow):
         )
         
         if filename:
-            self.criar_pdf(filename, projeto, cliente)
-            QMessageBox.information(self, "Sucesso", f"PDF gerado com sucesso!\n{filename}")
+            try:
+                self.criar_pdf(filename, projeto, cliente)
+                QMessageBox.information(self, "Sucesso", f"PDF gerado com sucesso!\n{filename}")
+            except Exception as e:
+                QMessageBox.critical(self, "Erro", f"Erro ao gerar PDF:\n{str(e)}")
+                print(f"Erro detalhado: {e}")  # Para debug no terminal
             
     def desenhar_logo_printai(self, pdf):
         """Desenha uma logo simples da Printaí 3D"""
@@ -311,50 +315,57 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.set_fill_color(100, 150, 255)  # Azul claro
         pdf.set_line_width(0.5)
         
-        # Face frontal do cubo
+        # Face frontal do cubo (retângulo simples)
         pdf.rect(15, 15, 15, 15, 'FD')
         
-        # Face superior (perspectiva)
-        pdf.set_fill_color(150, 180, 255)  # Azul mais claro
-        pdf.polygon([(15, 15), (20, 10), (35, 10), (30, 15)], 'FD')
+        # Linhas para dar efeito 3D
+        pdf.line(15, 15, 20, 10)  # Linha superior esquerda
+        pdf.line(30, 15, 35, 10)  # Linha superior direita
+        pdf.line(30, 30, 35, 25)  # Linha inferior direita
         
-        # Face lateral direita (perspectiva)
+        # Face superior (retângulo em perspectiva)
+        pdf.set_fill_color(150, 180, 255)  # Azul mais claro
+        pdf.rect(20, 10, 15, 5, 'FD')
+        
+        # Face lateral direita
         pdf.set_fill_color(80, 120, 200)  # Azul mais escuro
-        pdf.polygon([(30, 15), (35, 10), (35, 25), (30, 30)], 'FD')
+        pdf.rect(30, 15, 5, 15, 'FD')
         
         # Texto da logo ao lado
         pdf.set_xy(40, 20)
         pdf.set_font("Arial", 'B', 16)
         pdf.set_text_color(0, 100, 200)
-        pdf.cell(0, 8, "PRINTAÍ 3D", 0, 1, 'L')
+        pdf.cell(0, 8, "Printaí 3D", 0, 1, 'L')
         
         # Slogan
         pdf.set_xy(40, 28)
         pdf.set_font("Arial", 'I', 8)
         pdf.set_text_color(100, 100, 100)
-        pdf.cell(0, 4, "Impressão 3D Profissional", 0, 1, 'L')
+        pdf.cell(0, 4, "Impressao 3D Profissional", 0, 1, 'L')
         
         # Restaurar posição
         pdf.set_xy(x_atual, y_atual)
+        
+    def criar_pdf(self, filename, projeto, cliente):
         """Cria o arquivo PDF"""
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
         
-        # === CABEÇALHO ===
-        pdf.set_font("Arial", 'B', 20)
-        pdf.set_text_color(0, 100, 200)  # Azul
-        pdf.cell(0, 15, "PRINTAÍ 3D", ln=True, align='C')
+        # === DESENHAR LOGO ===
+        self.desenhar_logo_printai(pdf)
         
-        pdf.set_font("Arial", 'I', 12)
-        pdf.set_text_color(100, 100, 100)  # Cinza
-        pdf.cell(0, 8, "Impressão 3D Profissional", ln=True, align='C')
-        pdf.ln(10)
+        # === CABEÇALHO (ajustado para não sobrepor a logo) ===
+        pdf.set_xy(15, 45)  # Posicionar abaixo da logo
+        pdf.set_font("Arial", 'B', 18)
+        pdf.set_text_color(0, 100, 200)  # Azul
+        pdf.cell(0, 10, "Orçamento de impressão 3D", ln=True, align='C')
+        pdf.ln(5)
         
         # === DADOS DO PROJETO ===
         pdf.set_text_color(0, 0, 0)  # Preto
         pdf.set_font("Arial", 'B', 14)
-        pdf.cell(0, 10, f"ORÇAMENTO: {projeto.upper()}", ln=True)
+        pdf.cell(0, 10, f"Orçamento: {projeto.upper()}", ln=True)
         pdf.ln(5)
         
         pdf.set_font("Arial", '', 11)
@@ -392,21 +403,102 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.ln(10)
         
         # === TOTAIS ===
-        total_materia = sum(peca['materia_prima'] for peca in self.pecas_dados)
+        total_pecas = sum(peca['subtotal'] for peca in self.pecas_dados)
         arte_aplicada = self.arte_input.value()
-        total_final = total_materia + arte_aplicada
+        total_final = total_pecas + arte_aplicada
         
         pdf.set_font("Arial", 'B', 12)
-        pdf.cell(120, 8, "", 0, 0)  # Espaço
-        pdf.cell(50, 8, f"Total Matéria Prima: R$ {total_materia:.2f}", 1, 1, 'R')
+        pdf.cell(130, 8, "", 0, 0)  # Espaço
+        pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
         
-        pdf.cell(120, 8, "", 0, 0)
+        pdf.cell(130, 8, "", 0, 0)
         pdf.cell(50, 8, f"Arte Aplicada: R$ {arte_aplicada:.2f}", 1, 1, 'R')
         
         pdf.set_font("Arial", 'B', 14)
         pdf.set_fill_color(200, 255, 200)  # Verde claro
-        pdf.cell(120, 10, "", 0, 0)
-        pdf.cell(50, 10, f"TOTAL: R$ {total_final:.2f}", 1, 1, 'R', True)
+        pdf.cell(130, 10, "", 0, 0)
+        pdf.cell(50, 10, f"Total: R$ {total_final:.2f}", 1, 1, 'R', True)
+        
+        # === RODAPÉ ===
+        pdf.ln(20)
+        pdf.set_font("Arial", 'I', 8)
+        pdf.set_text_color(100, 100, 100)
+        pdf.cell(0, 5, "Orçamento válido por 30 dias. Valores sujeitos a alteração sem aviso prévio.", ln=True, align='C')
+        pdf.cell(0, 5, f"Gerado em {datetime.now().strftime('%d/%m/%Y às %H:%M')} pelo Sistema Printaí 3D", ln=True, align='C')
+        
+        # Salvar PDF
+        pdf.output(filename)
+        """Cria o arquivo PDF"""
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font("Arial", size=12)
+        
+        # === CABEÇALHO ===
+        pdf.set_font("Arial", 'B', 20)
+        pdf.set_text_color(0, 100, 200)  # Azul
+        pdf.cell(0, 15, "Printaí 3D", ln=True, align='C')
+        
+        pdf.set_font("Arial", 'I', 12)
+        pdf.set_text_color(100, 100, 100)  # Cinza
+        pdf.cell(0, 8, "Impressão 3D Profissional", ln=True, align='C')
+        pdf.ln(10)
+        
+        # === DADOS DO PROJETO ===
+        pdf.set_text_color(0, 0, 0)  # Preto
+        pdf.set_font("Arial", 'B', 14)
+        pdf.cell(0, 10, f"Orçamento: {projeto.upper()}", ln=True)
+        pdf.ln(5)
+        
+        pdf.set_font("Arial", '', 11)
+        pdf.cell(40, 8, "Cliente:", 0, 0)
+        pdf.set_font("Arial", 'B', 11)
+        pdf.cell(0, 8, cliente, ln=True)
+        
+        pdf.set_font("Arial", '', 11)
+        pdf.cell(40, 8, "Data:", 0, 0)
+        pdf.cell(0, 8, datetime.now().strftime("%d/%m/%Y"), ln=True)
+        pdf.ln(10)
+        
+        # === TABELA DE PEÇAS ===
+        pdf.set_font("Arial", 'B', 10)
+        pdf.set_fill_color(230, 230, 230)  # Cinza claro para cabeçalho
+        
+        # Cabeçalho da tabela
+        pdf.cell(50, 8, "Nome da Peça", 1, 0, 'C', True)
+        pdf.cell(35, 8, "Filamento", 1, 0, 'C', True)
+        pdf.cell(25, 8, "Tempo", 1, 0, 'C', True)
+        pdf.cell(20, 8, "Peso(g)", 1, 0, 'C', True)
+        pdf.cell(25, 8, "Valor", 1, 0, 'C', True)
+        pdf.cell(25, 8, "Subtotal", 1, 1, 'C', True)
+        
+        # Dados das peças
+        pdf.set_font("Arial", '', 9)
+        for peca in self.pecas_dados:
+            pdf.cell(50, 6, peca['nome'][:20], 1, 0, 'L')  # Limita nome a 20 chars
+            pdf.cell(35, 6, peca['filamento'][:15], 1, 0, 'C')
+            pdf.cell(25, 6, peca['tempo_str'], 1, 0, 'C')
+            pdf.cell(20, 6, f"{peca['peso']:.1f}", 1, 0, 'C')
+            pdf.cell(25, 6, f"R$ {peca['preco_peca']:.2f}", 1, 0, 'C')
+            pdf.cell(25, 6, f"R$ {peca['subtotal']:.2f}", 1, 1, 'R')
+        
+        pdf.ln(10)
+        
+        # === TOTAIS ===
+        total_pecas = sum(peca['subtotal'] for peca in self.pecas_dados)
+        arte_aplicada = self.arte_input.value()
+        total_final = total_pecas + arte_aplicada
+        
+        pdf.set_font("Arial", 'B', 12)
+        pdf.cell(130, 8, "", 0, 0)  # Espaço
+        pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
+        
+        pdf.cell(130, 8, "", 0, 0)
+        pdf.cell(50, 8, f"Arte Aplicada: R$ {arte_aplicada:.2f}", 1, 1, 'R')
+        
+        pdf.set_font("Arial", 'B', 14)
+        pdf.set_fill_color(200, 255, 200)  # Verde claro
+        pdf.cell(130, 10, "", 0, 0)
+        pdf.cell(50, 10, f"Total: R$ {total_final:.2f}", 1, 1, 'R', True)
         
         # === RODAPÉ ===
         pdf.ln(20)
@@ -432,9 +524,10 @@ class OrcamentoPrintai3D(QMainWindow):
             self.cliente_input.clear()
             self.nome_peca_input.clear()
             self.filamento_input.clear()
-            self.tempo_input.setValue(1.0)
+            self.horas_input.setValue(1)
+            self.minutos_input.setValue(30)
             self.peso_input.setValue(10.0)
-            self.preco_g_input.setValue(0.05)
+            self.preco_peca_input.setValue(15.00)
             self.arte_input.setValue(30.00)
             self.atualizar_tabela()
             self.calcular_total()
