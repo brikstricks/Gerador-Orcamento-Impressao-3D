@@ -19,7 +19,7 @@ class OrcamentoPrintai3D(QMainWindow):
     def init_ui(self):
         """Inicializa a interface do usuário"""
         self.setWindowTitle("Printaí 3D - Sistema de Orçamentos")
-        self.setGeometry(100, 100, 1000, 700)
+        self.setGeometry(300, 100, 1000, 700)
         
         # Widget principal
         main_widget = QWidget()
@@ -44,7 +44,7 @@ class OrcamentoPrintai3D(QMainWindow):
     def criar_secao_projeto(self, layout):
         """Cria seção para dados do projeto e cliente"""
         # Título
-        titulo = QLabel("📋 DADOS DO PROJETO")
+        titulo = QLabel("📋 Dados do Projeto")
         titulo.setFont(QFont("Arial", 14, QFont.Bold))
         layout.addWidget(titulo)
         
@@ -67,7 +67,7 @@ class OrcamentoPrintai3D(QMainWindow):
         
     def criar_secao_pecas(self, layout):
         """Cria seção para adicionar peças"""
-        titulo = QLabel("\n🎯 ADICIONAR PEÇA")
+        titulo = QLabel("\n🎯 Adicionar Peça")
         titulo.setFont(QFont("Arial", 14, QFont.Bold))
         layout.addWidget(titulo)
         
@@ -83,7 +83,7 @@ class OrcamentoPrintai3D(QMainWindow):
         # Tipo/Cor do filamento
         pecas_layout.addWidget(QLabel("Filamento:"))
         self.filamento_input = QLineEdit()
-        self.filamento_input.setPlaceholderText("Ex: PLA Preto")
+        self.filamento_input.setPlaceholderText("Ex: PLA-Preto")
         pecas_layout.addWidget(self.filamento_input)
         
         # Tempo de impressão (horas e minutos)
@@ -94,13 +94,13 @@ class OrcamentoPrintai3D(QMainWindow):
         
         self.horas_input = QSpinBox()
         self.horas_input.setRange(0, 99)
-        self.horas_input.setValue(1)
+        self.horas_input.setValue(0)
         self.horas_input.setSuffix("h")
         tempo_layout.addWidget(self.horas_input)
         
         self.minutos_input = QSpinBox()
         self.minutos_input.setRange(0, 59)
-        self.minutos_input.setValue(30)
+        self.minutos_input.setValue(00)
         self.minutos_input.setSuffix("min")
         tempo_layout.addWidget(self.minutos_input)
         
@@ -110,16 +110,16 @@ class OrcamentoPrintai3D(QMainWindow):
         pecas_layout.addWidget(QLabel("Peso (g):"))
         self.peso_input = QDoubleSpinBox()
         self.peso_input.setDecimals(1)
-        self.peso_input.setRange(0.1, 9999.9)
-        self.peso_input.setValue(10.0)
+        self.peso_input.setRange(0.0, 9999.9)
+        self.peso_input.setValue(0.0)
         pecas_layout.addWidget(self.peso_input)
         
         # Preço por peça (R$)
         pecas_layout.addWidget(QLabel("Valor R$:"))
         self.preco_peca_input = QDoubleSpinBox()
         self.preco_peca_input.setDecimals(2)
-        self.preco_peca_input.setRange(0.01, 9999.99)
-        self.preco_peca_input.setValue(15.00)  # R$ 15,00 como padrão
+        self.preco_peca_input.setRange(0.00, 9999.99)
+        self.preco_peca_input.setValue(0.00)  # R$ 15,00 como padrão
         self.preco_peca_input.setPrefix("R$ ")
         pecas_layout.addWidget(self.preco_peca_input)
         
@@ -133,7 +133,7 @@ class OrcamentoPrintai3D(QMainWindow):
         
     def criar_tabela_pecas(self, layout):
         """Cria a tabela para mostrar as peças adicionadas"""
-        titulo = QLabel("\n📊 PEÇAS DO ORÇAMENTO")
+        titulo = QLabel("\n📊 Peças do orçamento")
         titulo.setFont(QFont("Arial", 14, QFont.Bold))
         layout.addWidget(titulo)
         
@@ -160,7 +160,7 @@ class OrcamentoPrintai3D(QMainWindow):
         
     def criar_secao_valores(self, layout):
         """Cria seção dos valores finais"""
-        titulo = QLabel("\n💰 VALORES FINAIS")
+        titulo = QLabel("\n💰 Valores finais")
         titulo.setFont(QFont("Arial", 14, QFont.Bold))
         layout.addWidget(titulo)
         
@@ -177,12 +177,12 @@ class OrcamentoPrintai3D(QMainWindow):
         self.arte_input = QDoubleSpinBox()
         self.arte_input.setRange(0, 9999.99)
         self.arte_input.setDecimals(2)
-        self.arte_input.setValue(30.00)  # Valor padrão
+        self.arte_input.setValue(0.00)  # Valor padrão
         self.arte_input.valueChanged.connect(self.calcular_total)
         valores_layout.addWidget(self.arte_input)
         
         # Total final
-        valores_layout.addWidget(QLabel("TOTAL FINAL:"))
+        valores_layout.addWidget(QLabel("Total Final:"))
         self.total_final_label = QLabel("R$ 0,00")
         self.total_final_label.setStyleSheet("font-weight: bold; font-size: 16px; color: green;")
         valores_layout.addWidget(self.total_final_label)
@@ -524,11 +524,11 @@ class OrcamentoPrintai3D(QMainWindow):
             self.cliente_input.clear()
             self.nome_peca_input.clear()
             self.filamento_input.clear()
-            self.horas_input.setValue(1)
-            self.minutos_input.setValue(30)
-            self.peso_input.setValue(10.0)
-            self.preco_peca_input.setValue(15.00)
-            self.arte_input.setValue(30.00)
+            self.horas_input.setValue(0)
+            self.minutos_input.setValue(00)
+            self.peso_input.setValue(0.0)
+            self.preco_peca_input.setValue(0.00)
+            self.arte_input.setValue(0.00)
             self.atualizar_tabela()
             self.calcular_total()
 
