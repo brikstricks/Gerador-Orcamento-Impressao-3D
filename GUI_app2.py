@@ -289,7 +289,7 @@ class OrcamentoPrintai3D(QMainWindow):
         # Escolher onde salvar
         filename, _ = QFileDialog.getSaveFileName(
             self, "Salvar Orçamento", 
-            f"Orcamento_{projeto.replace(' ', '-')}_{datetime.now().strftime('%d%m%Y_%H%M')}.pdf",
+            f"Orcamento-{projeto.replace(' ', '-')}_{datetime.now().strftime('%d-%m-%Y_%H:%M')}.pdf",
             "Arquivos PDF (*.pdf)"
         )
         
