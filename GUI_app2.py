@@ -173,7 +173,7 @@ class OrcamentoPrintai3D(QMainWindow):
         valores_layout.addWidget(self.total_materia_label)
         
         # Arte aplicada (mão de obra)
-        valores_layout.addWidget(QLabel("Arte Aplicada (R$):"))
+        valores_layout.addWidget(QLabel("Arte (R$):"))
         self.arte_input = QDoubleSpinBox()
         self.arte_input.setRange(0, 9999.99)
         self.arte_input.setDecimals(2)
@@ -289,7 +289,7 @@ class OrcamentoPrintai3D(QMainWindow):
         # Escolher onde salvar
         filename, _ = QFileDialog.getSaveFileName(
             self, "Salvar Orçamento", 
-            f"Orcamento_{projeto.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
+            f"Orcamento_{projeto.replace(' ', '-')}_{datetime.now().strftime('%d%m%Y_%H%M')}.pdf",
             "Arquivos PDF (*.pdf)"
         )
         
@@ -369,12 +369,12 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.ln(5)
         
         pdf.set_font("Arial", '', 11)
-        pdf.cell(40, 8, "Cliente:", 0, 0)
+        pdf.cell(15, 8, "Cliente:", 0, 0)
         pdf.set_font("Arial", 'B', 11)
         pdf.cell(0, 8, cliente, ln=True)
         
         pdf.set_font("Arial", '', 11)
-        pdf.cell(40, 8, "Data:", 0, 0)
+        pdf.cell(12, 8, "Data:", 0, 0)
         pdf.cell(0, 8, datetime.now().strftime("%d/%m/%Y"), ln=True)
         pdf.ln(10)
         
@@ -412,7 +412,7 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
         
         pdf.cell(130, 8, "", 0, 0)
-        pdf.cell(50, 8, f"Arte Aplicada: R$ {arte_aplicada:.2f}", 1, 1, 'R')
+        pdf.cell(50, 8, f"Arte: R$ {arte_aplicada:.2f}", 1, 1, 'R')
         
         pdf.set_font("Arial", 'B', 14)
         pdf.set_fill_color(200, 255, 200)  # Verde claro
@@ -450,12 +450,12 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.ln(5)
         
         pdf.set_font("Arial", '', 11)
-        pdf.cell(40, 8, "Cliente:", 0, 0)
+        pdf.cell(15, 8, "Cliente:", 0, 0)
         pdf.set_font("Arial", 'B', 11)
         pdf.cell(0, 8, cliente, ln=True)
         
         pdf.set_font("Arial", '', 11)
-        pdf.cell(40, 8, "Data:", 0, 0)
+        pdf.cell(12, 8, "Data:", 0, 0)
         pdf.cell(0, 8, datetime.now().strftime("%d/%m/%Y"), ln=True)
         pdf.ln(10)
         
@@ -474,8 +474,8 @@ class OrcamentoPrintai3D(QMainWindow):
         # Dados das peças
         pdf.set_font("Arial", '', 9)
         for peca in self.pecas_dados:
-            pdf.cell(50, 6, peca['nome'][:20], 1, 0, 'L')  # Limita nome a 20 chars
-            pdf.cell(35, 6, peca['filamento'][:15], 1, 0, 'C')
+            pdf.cell(50, 6, peca['nome'][:30], 1, 0, 'L')  # Limita nome a 20 chars
+            pdf.cell(35, 6, peca['filamento'][:20], 1, 0, 'L')
             pdf.cell(25, 6, peca['tempo_str'], 1, 0, 'C')
             pdf.cell(20, 6, f"{peca['peso']:.1f}", 1, 0, 'C')
             pdf.cell(25, 6, f"R$ {peca['preco_peca']:.2f}", 1, 0, 'C')
@@ -493,7 +493,7 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
         
         pdf.cell(130, 8, "", 0, 0)
-        pdf.cell(50, 8, f"Arte Aplicada: R$ {arte_aplicada:.2f}", 1, 1, 'R')
+        pdf.cell(50, 8, f"Arte : R$ {arte_aplicada:.2f}", 1, 1, 'R')
         
         pdf.set_font("Arial", 'B', 14)
         pdf.set_fill_color(200, 255, 200)  # Verde claro
