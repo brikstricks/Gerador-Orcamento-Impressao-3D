@@ -303,7 +303,7 @@ class OrcamentoPrintai3D(QMainWindow):
             
     def desenhar_logo_printai(self, pdf):
         """Carrega e exibe a logo PNG da Printaí 3D"""
-        logo_path = "fundo_branco.png"  # Nome do arquivo da sua logo
+        logo_path = "P:/Automação_Python/fundo_branco.png"  # Nome do arquivo da sua logo
         
         # Verificar se o arquivo existe
         if os.path.exists(logo_path):
