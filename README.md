@@ -1,234 +1,324 @@
-# Printaí 3D — Gerador de Orçamentos (PDF)
+# 🖨️ Sistema de Orçamentos Printaí 3D
 
-Script em **Python** para coletar dados de peças de impressão 3D, somar **Matéria Prima**, adicionar **Arte aplicada** (mão de obra) e gerar um **relatório em PDF** com cabeçalho *Printaí 3D* e **título do projeto**.
+Sistema completo para geração de orçamentos de impressão 3D com interface gráfica moderna e exportação em PDF profissional.
 
----
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![PyQt5](https://img.shields.io/badge/PyQt5-Interface-green.svg)
+![PDF](https://img.shields.io/badge/PDF-Export-red.svg)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow.svg)
 
-## ✨ Principais recursos
+## 📋 Índice
 
-* Entrada interativa (CLI) para cadastrar **uma ou múltiplas peças**.
-* Tabela com colunas: **Nome da peça**, **Tipo/Cor Filamento**, **Tempo de impressão**, **Peso estimado (g)**, **Matéria Prima (R\$)**.
-* Cálculo automático: **Total de Matéria Prima**, **Arte aplicada** e **Total final** (*Investimento criativo + Matéria Prima + Arte aplicada*).
-* Geração de PDF com **cabeçalho fixo** da Homemade3D e **título do projeto**.
-* Formatação de moeda em **R\$** (duas casas decimais).
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação)
+- [Como Usar](#-como-usar)
+- [Exemplos de Uso](#-exemplos-de-uso)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Contribuição](#-contribuição)
+- [Solução de Problemas](#-solução-de-problemas)
+- [Roadmap](#-roadmap)
 
----
+## 🎯 Sobre o Projeto
 
-## 📂 Estrutura sugerida do projeto
+O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para automatizar a criação de orçamentos profissionais para serviços de impressão 3D. 
 
+### ✨ Por que usar este sistema?
+
+- **Facilidade**: Interface intuitiva para cadastro rápido de peças
+- **Profissionalismo**: PDFs com logo e layout profissional
+- **Precisão**: Cálculos automáticos de tempo, materiais e totais
+- **Flexibilidade**: Valores personalizáveis por peça e mão de obra
+- **Organização**: Tabelas estruturadas com todos os dados
+
+## 🚀 Funcionalidades
+
+### ✅ Implementadas
+
+- **Interface Gráfica Moderna**: Desenvolvida com PyQt5
+- **Cadastro de Peças**: 
+  - Nome da peça
+  - Tipo/cor do filamento
+  - Tempo de impressão (horas e minutos)
+  - Peso estimado
+  - Valor individual por peça
+- **Cálculos Automáticos**: Subtotais, total de peças e valor final
+- **Arte Aplicada**: Campo configurável para mão de obra
+- **Exportação PDF**: 
+  - Logo personalizada da Printaí 3D
+  - Layout profissional
+  - Tabela organizada
+  - Totais destacados
+- **Validações**: Campos obrigatórios e verificações de erro
+- **Interface Responsiva**: Tabela redimensionável e campos organizados
+
+### 🔄 Em Desenvolvimento
+
+- Banco de dados para histórico de orçamentos
+- Templates de peças mais utilizadas
+- Cadastro de clientes
+- Relatórios de vendas
+- Interface web (Flask/Django)
+
+## 🛠️ Tecnologias Utilizadas
+
+| Tecnologia | Versão | Finalidade |
+|------------|---------|------------|
+| **Python** | 3.8+ | Linguagem principal |
+| **PyQt5** | 5.15+ | Interface gráfica |
+| **fpdf2** | Latest | Geração de PDFs |
+| **pandas** | 1.3+ | Manipulação de dados |
+
+## 📋 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+- **Python 3.8 ou superior**
+- **pip** (gerenciador de pacotes Python)
+- **Sistema operacional**: Windows, macOS ou Linux
+
+### Como verificar se o Python está instalado:
+
+```bash
+python --version
+# ou
+python3 --version
 ```
 
-> **Observação:** o nome da pasta pode conter espaços (ex.: `Automação Python`). No PowerShell, se precisar referenciar o caminho completo, use aspas: `"P:\Automação Python\venv\Scripts\Activate.ps1"`.
+Se não tiver o Python instalado, baixe em: https://python.org/downloads/
 
----
+## 🔧 Instalação
 
-## 🧰 Requisitos
+### 1. Clone ou baixe o projeto
 
-* **Python** 3.10+ (recomendado)
-* **Sistema operacional**: Windows, macOS ou Linux
-* **Bibliotecas Python**:
+```bash
+# Opção 1: Clone via git
+git clone https://github.com/seu-usuario/printai-3d-orcamentos.git
+cd printai-3d-orcamentos
 
-  * [`fpdf2`](https://pypi.org/project/fpdf2/) (utilizada com `from fpdf import FPDF`)
-
-> Conteúdo mínimo de `requirements.txt`:
-
-```
-fpdf2
+# Opção 2: Baixe o arquivo .zip e extraia
 ```
 
----
+### 2. Crie um ambiente virtual (recomendado)
 
-## ⚙️ Configuração do ambiente (VS Code + venv)
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-1. **Abra a pasta do projeto no VS Code**: `File > Open Folder...`.
-2. **Abra o terminal integrado** (\`Ctrl + \`\`\`).
-3. **Crie o ambiente virtual**:
-
-   ```powershell
-   python -m venv venv
-   ```
-4. **Ative o ambiente virtual (PowerShell)**:
-
-   ```powershell
-   .\venv\Scripts\Activate.ps1
-   ```
-
-   Se o Windows bloquear scripts, rode **apenas nesta sessão**:
-
-   ```powershell
-   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-   .\venv\Scripts\Activate.ps1
-   ```
-
-   Alternativa sem mexer na política (via `cmd`):
-
-   ```powershell
-   .\venv\Scripts\activate.bat
-   ```
-5. **Instale as dependências**:
-
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-   ou diretamente:
-
-   ```powershell
-   pip install fpdf2
-   ```
-6. **Selecione o interpretador do venv no VS Code**:
-
-   * `Ctrl + Shift + P` → **Python: Select Interpreter** → escolha `./venv/Scripts/python.exe`.
-
----
-
-## ▶️ Como executar
-
-No terminal (com o `venv` ativo):
-
-```powershell
-python first_step.py
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-O programa irá:
+### 3. Instale as dependências
 
-1. Perguntar o **Título do projeto**.
-2. Entrar em um **loop de cadastro** de peças (você pode adicionar quantas quiser):
-
-   * **Nome da peça**
-   * **Tipo/Cor Filamento**
-   * **Tempo de impressão** (texto livre, ex.: `3h 20min`)
-   * **Peso estimado (g)**
-   * **Matéria Prima (R\$)** (aceita vírgula ou ponto; ex.: `15,90` ou `15.90`)
-   * Ao final de cada peça: *“Adicionar outra peça? (s/n)”*
-3. Solicitar o valor de **Arte aplicada (R\$)**.
-4. Exibir um **resumo** na tela.
-5. Perguntar se deseja **gerar o PDF**.
-6. Salvar o arquivo como:
-
-   ```
-   Printaí 3D - <Título do projeto>.pdf
-   ```
-
----
-
-## 🧮 Regras de cálculo
-
-* **Total Matéria Prima** = soma da coluna *Matéria Prima (R\$)* de todas as peças.
-* **Total Final** (*Investimento criativo + Matéria Prima + Arte aplicada*) =
-
-  ```
-  Total Matéria Prima + Arte aplicada
-  ```
-
----
-
-## 🧾 Formato do PDF
-
-* **Cabeçalho**: `Printaí 3D` (centralizado) + `Projeto: <Título>`.
-* **Tabela** (largura fixa por coluna) com as 5 colunas definidas.
-* **Linhas finais**:
-
-  * `Total Matéria Prima` → valor somado
-  * `Arte aplicada` → valor informado
-  * `Investimento Total` → soma final
-
-> *(Opcional futuro)*: adicionar **logo** no cabeçalho (requer imagem `.png/.jpg` e pequeno ajuste no código).
-
----
-
-## 🔎 Validações e comportamento
-
-* **Moeda**: aceita entrada com `,` ou `.` e converte internamente para número.
-* **Campos obrigatórios**: todos os campos de peça são solicitados a cada inclusão.
-* **Repetição**: após cada peça, o programa pergunta se deseja adicionar outra.
-* **Saída**: apenas **PDF** (sem geração de `.xlsx`).
-
----
-
-## 🧪 Exemplo (execução simplificada)
-
-```
-Título do projeto: Suporte de Parede PS5
-
---- Nova peça ---
-Nome da peça: Base
-Tipo/Cor Filamento: PLA Preto
-Tempo de impressão: 5h 30min
-Peso estimado (g): 120
-Matéria Prima (R$): 18,50
-Adicionar outra peça? (s/n): s
-
---- Nova peça ---
-Nome da peça: Tampa
-Tipo/Cor Filamento: PLA Preto
-Tempo de impressão: 3h 10min
-Peso estimado (g): 80
-Matéria Prima (R$): 12,00
-Adicionar outra peça? (s/n): n
-
-Valor da Arte aplicada (R$): 35,00
-
-Resumo: Matéria Prima = R$ 30,50, Arte = R$ 35,00, Total = R$ 65,50
-Gerar PDF? (s/n): s
-PDF gerado: Printaí 3D - Suporte de Parede PS5.pdf
+```bash
+pip install fpdf2 pandas PyQt5
 ```
 
----
+### 4. Execute o programa
 
-## 🧯 Solução de problemas (Troubleshooting)
+```bash
+python printai_3d_orcamentos.py
+```
 
-**1) `ModuleNotFoundError: No module named 'fpdf'`**
+## 📖 Como Usar
 
-* Instale a lib dentro do venv: `pip install fpdf2`.
-* Teste: `python -c "from fpdf import FPDF; print('OK')"` → deve imprimir `OK`.
+### 1. **Iniciando o Sistema**
 
-**2) VS Code mostra `Import "fpdf" could not be resolved from source`**
+Execute o arquivo principal e a interface será aberta:
 
-* Selecione o interpretador correto: `Ctrl + Shift + P` → *Python: Select Interpreter* → `./venv/Scripts/python.exe`.
-* Reinicie o VS Code.
+![Interface Principal](docs/interface-principal.png)
 
-**3) Erro ao ativar venv: `...não está assinado digitalmente`**
+### 2. **Preenchendo Dados do Projeto**
 
-* Rode apenas nesta sessão: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` e ative novamente.
-* Alternativa: `./venv/Scripts/activate.bat` (via `cmd`).
+- **Nome do Projeto**: Ex: "Miniaturas RPG Mesa Redonda"
+- **Cliente**: Nome do cliente ou empresa
 
-**4) PDF sem acentuação correta (caso futuro)**
+### 3. **Adicionando Peças**
 
-* A fonte padrão do `fpdf2` pode não suportar todos os caracteres. Solução: registrar fonte TTF com suporte a UTF-8 (ex.: DejaVuSans). *(Podemos implementar se necessário.)*
+Para cada peça do orçamento:
 
----
+1. **Nome da Peça**: Ex: "Miniatura Orc Guerreiro"
+2. **Filamento**: Ex: "PLA Preto" ou "PETG Transparente"
+3. **Tempo**: Selecione horas (0-99) e minutos (0-59)
+4. **Peso**: Peso estimado em gramas
+5. **Valor**: Preço que você cobrará por esta peça
+6. Clique em **"➕ Adicionar Peça"**
 
-## 🛣️ Roadmap (melhorias futuras)
+### 4. **Configurando Valores Finais**
 
-* Inserir **logo da Homemade3D** no cabeçalho do PDF.
-* Quebra de linha automática e ajuste de altura para textos longos.
-* Formatação de moeda no padrão `pt-BR` com separador de milhar.
-* Exportar também **JSON/CSV** para histórico.
-* Parâmetros por **linha de comando** (`--titulo`, `--saida`, etc.).
-* Cálculo automático de **Matéria Prima** com base em **tempo** e **peso** (regras configuráveis).
-* Testes automatizados e *CI* simples no GitHub Actions.
+- **Arte Aplicada**: Valor da mão de obra (padrão: R$ 30,00)
+- Os totais são calculados automaticamente
 
----
+### 5. **Gerando o PDF**
 
-## 📜 Licença
+1. Clique em **"📄 Gerar PDF do Orçamento"**
+2. Escolha onde salvar o arquivo
+3. O PDF será criado com logo e layout profissional
 
-Sugestão: **MIT License**. (Ajuste conforme sua preferência.)
+### 6. **Outras Opções**
 
----
+- **❌ Remover Peça**: Selecione uma linha na tabela e clique no botão
+- **🗑️ Limpar Tudo**: Remove todos os dados (pede confirmação)
 
-## 👤 Autor
+## 💡 Exemplos de Uso
 
-* **Pablo Lacerda Casagni** — *Printaí 3D*
+### Exemplo 1: Orçamento para Miniaturas de RPG
 
----
+```
+Projeto: "Set Miniaturas D&D"
+Cliente: "João Silva"
+
+Peças:
+1. Miniatura Elfo Arqueiro    | PLA Verde  | 2h30min | 15g | R$ 25,00
+2. Miniatura Anão Bárbaro     | PLA Cinza  | 3h15min | 22g | R$ 30,00
+3. Dragão Boss                | PLA Preto  | 8h00min | 85g | R$ 80,00
+
+Total Peças: R$ 135,00
+Arte Aplicada: R$ 50,00
+TOTAL FINAL: R$ 185,00
+```
+
+### Exemplo 2: Orçamento para Peças Funcionais
+
+```
+Projeto: "Peças Reposição Impressora"
+Cliente: "TechLab Ltda"
+
+Peças:
+1. Engrenagem Motor X    | PETG Azul    | 1h45min | 8g  | R$ 15,00
+2. Suporte Sensor Y      | ABS Preto    | 2h30min | 12g | R$ 20,00
+3. Case Eletrônico       | PETG Branco  | 4h00min | 35g | R$ 45,00
+
+Total Peças: R$ 80,00
+Arte Aplicada: R$ 30,00
+TOTAL FINAL: R$ 110,00
+```
+
+## 📁 Estrutura do Projeto
+
+```
+printai-3d-orcamentos/
+│
+├── printai_3d_orcamentos.py    # Arquivo principal
+├── README.md                   # Documentação
+├── requirements.txt            # Dependências
+├── docs/                       # Documentação adicional
+│   ├── interface-principal.png
+│   └── exemplo-pdf.png
+├── examples/                   # Exemplos de PDFs gerados
+│   ├── orcamento-exemplo-1.pdf
+│   └── orcamento-exemplo-2.pdf
+└── venv/                      # Ambiente virtual (criado na instalação)
+```
 
 ## 🤝 Contribuição
 
-Sinta-se à vontade para abrir *issues* e *pull requests*. Para mudanças maiores, descreva o que pretende alterar e o motivo.
+Contribuições são bem-vindas! Aqui está como você pode ajudar:
+
+### Ideias para Contribuição:
+
+- 🎨 Melhorias na interface
+- 🐛 Correção de bugs
+- 📚 Documentação adicional
+- ✨ Novas funcionalidades
+- 🧪 Testes automatizados
+
+## 🆘 Solução de Problemas
+
+### ❌ Erro: "ModuleNotFoundError: No module named 'PyQt5'"
+
+**Solução:**
+```bash
+pip install PyQt5
+```
+
+### ❌ Erro: "ModuleNotFoundError: No module named 'fpdf'"
+
+**Solução:**
+```bash
+pip install fpdf2
+```
+
+### ❌ Erro ao gerar PDF: "Permission denied"
+
+**Causas possíveis:**
+- PDF já está aberto em outro programa
+- Pasta de destino sem permissão de escrita
+
+**Solução:**
+- Feche o PDF se estiver aberto
+- Escolha outra pasta para salvar
+- Execute como administrador (Windows)
+
+### ❌ Interface não abre ou fica em branco
+
+**Solução:**
+```bash
+# Reinstale o PyQt5
+pip uninstall PyQt5
+pip install PyQt5
+```
+
+### ❌ Caracteres especiais não aparecem no PDF
+
+**Solução:**
+- Evite acentos nos nomes das peças
+- Use apenas caracteres ASCII no nome do projeto
+
+### 🔍 Debug Mode
+
+Para ver erros detalhados, execute:
+
+```bash
+python printai_3d_orcamentos.py
+```
+
+Os erros aparecerão no terminal.
+
+## 🗺️ Roadmap
+
+### Versão 1.1 (Próxima)
+- [ ] Banco de dados SQLite para histórico
+- [ ] Backup automático dos dados
+- [ ] Templates de peças frequentes
+- [ ] Configurações salvas do usuário
+
+### Versão 1.2 (Futura)
+- [ ] Cadastro completo de clientes
+- [ ] Relatórios de vendas mensais
+- [ ] Múltiplos templates de PDF
+- [ ] Sistema de descontos automáticos
+
+### Versão 2.0 (Longo Prazo)
+- [ ] Interface web com Flask
+- [ ] API REST para integração
+- [ ] Sistema multi-usuário
+- [ ] Dashboard de analytics
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Desenvolvido com ❤️ para a comunidade de impressão 3D**
+
+## 🙏 Agradecimentos
+
+- Comunidade Python Brasil
+- Desenvolvedores do PyQt5 e fpdf2
+- Beta testers da versão inicial
+- Makers e entusiastas da impressão 3D
 
 ---
 
-## 📝 Nota sobre o código
+⭐ **Se este projeto te ajudou, deixe uma estrela no repositório!**
 
-O script principal utiliza `fpdf2` com `from fpdf import FPDF`. Caso você renomeie arquivos/pastas, lembre-se de atualizar referências nos comandos do README.
+📧 **Dúvidas?** Abra uma issue ou envie um email!
+
+🚀 **Bora imprimir em 3D!**
