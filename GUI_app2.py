@@ -301,24 +301,17 @@ class OrcamentoPrintai3D(QMainWindow):
             
     def desenhar_logo_printai(self, pdf):
         """Carrega e exibe a logo PNG da Printaí 3D"""
-        logo_path = "logo_nova.jpg.png"  # Nome do arquivo da sua logo
+        logo_path = "logo_nova.jpg"  # Nome do arquivo da sua logo
         
-        # Verificar se o arquivo existe
-        if os.path.exists(logo_path):
-            try:
-                # Inserir a logo PNG (centralizada no topo)
-                pdf.image(logo_path, x=85, y=10, w=40, h=30)  # Centralizada e maior
-                
-            except Exception as e:
-                # Se der erro ao carregar a imagem, mostra texto simples
-                print(f"Erro ao carregar a logo: {e}")
-                pdf.set_xy(85, 20)
-                pdf.set_font("Arial", 'B', 16)
-                pdf.set_text_color(0, 100, 200)
-                pdf.cell(0, 8, "Printaí 3D", 0, 1, 'C')
-        else:
-            # Arquivo não encontrado - mostra texto centralizado
-            pdf.set_xy(15, 20)
+        try:
+            # Inserir a logo PNG no cabeçalho (centralizada e com tamanho adequado)
+            # Posição X calculada para centralizar (210mm - 50mm) / 2 = 80mm
+            pdf.image(logo_path, x=80, y=8, w=40, h=35)
+            
+        except Exception as e:
+            # Se der erro ao carregar a imagem, mostra texto simples como fallback
+            print(f"Erro ao carregar a logo: {e}")
+            pdf.set_xy(15, 15)
             pdf.set_font("Arial", 'B', 18)
             pdf.set_text_color(0, 100, 200)
             pdf.cell(0, 8, "Printaí 3D", 0, 1, 'C')
@@ -336,7 +329,7 @@ class OrcamentoPrintai3D(QMainWindow):
         self.desenhar_logo_printai(pdf)
         
         # === CABEÇALHO (ajustado para não sobrepor a logo) ===
-        pdf.set_xy(15, 50)  # Posicionar abaixo da logo
+        pdf.set_xy(0, 48)  # Posicionar abaixo da logo
         pdf.set_font("Arial", 'B', 16)
         pdf.set_text_color(0, 100, 200)  # Azul
         pdf.cell(0, 10, "Orçamento Impressão 3D", ln=True, align='C')
