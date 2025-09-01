@@ -182,7 +182,7 @@ class OrcamentoPrintai3D(QMainWindow):
         valores_layout.addWidget(self.arte_input)
         
         # Total final
-        valores_layout.addWidget(QLabel("TOTAL:"))
+        valores_layout.addWidget(QLabel("Total:"))
         self.total_final_label = QLabel("R$ 0,00")
         self.total_final_label.setStyleSheet("font-weight: bold; font-size: 16px; color: green;")
         valores_layout.addWidget(self.total_final_label)
@@ -306,7 +306,7 @@ class OrcamentoPrintai3D(QMainWindow):
         try:
             # Inserir a logo PNG no cabeçalho (centralizada e com tamanho adequado)
             # Posição X calculada para centralizar (210mm - 50mm) / 2 = 80mm
-            pdf.image(logo_path, x=80, y=8, w=40, h=35)
+            pdf.image(logo_path, x=80, y=8, w=37, h=35)
             
         except Exception as e:
             # Se der erro ao carregar a imagem, mostra texto simples como fallback
@@ -380,15 +380,15 @@ class OrcamentoPrintai3D(QMainWindow):
         
         pdf.set_font("Arial", 'B', 12)
         pdf.cell(145, 8, "", 0, 0)  # Espaço
-        pdf.cell(35, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
+        pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
         
         pdf.cell(145, 8, "", 0, 0)
-        pdf.cell(35, 8, f"Arte : R$ {arte_aplicada:.2f}", 1, 1, 'R')
+        pdf.cell(50, 8, f"Arte : R$ {arte_aplicada:.2f}", 1, 1, 'R')
         
         pdf.set_font("Arial", 'B', 14)
         pdf.set_fill_color(200, 255, 200)  # Verde claro
         pdf.cell(145, 10, "", 0, 0)
-        pdf.cell(35, 10, f"Total: R$ {total_final:.2f}", 1, 1, 'R', True)
+        pdf.cell(50, 10, f"Total: R$ {total_final:.2f}", 1, 1, 'R', True)
         
         # === RODAPÉ ===
         pdf.ln(15)
