@@ -379,15 +379,15 @@ class OrcamentoPrintai3D(QMainWindow):
         total_final = total_pecas + arte_aplicada
         
         pdf.set_font("Arial", 'B', 12)
-        pdf.cell(145, 8, "", 0, 0)  # Espaço
+        pdf.cell(130, 8, "", 0, 0)  # Espaço
         pdf.cell(50, 8, f"Total Peças: R$ {total_pecas:.2f}", 1, 1, 'R')
         
-        pdf.cell(145, 8, "", 0, 0)
+        pdf.cell(130, 8, "", 0, 0)
         pdf.cell(50, 8, f"Arte : R$ {arte_aplicada:.2f}", 1, 1, 'R')
         
         pdf.set_font("Arial", 'B', 14)
         pdf.set_fill_color(200, 255, 200)  # Verde claro
-        pdf.cell(145, 10, "", 0, 0)
+        pdf.cell(130, 10, "", 0, 0)
         pdf.cell(50, 10, f"Total: R$ {total_final:.2f}", 1, 1, 'R', True)
         
         # === RODAPÉ ===
