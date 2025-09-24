@@ -177,7 +177,7 @@ class OrcamentoPrintai3D(QMainWindow):
         self.arte_input = QDoubleSpinBox()
         self.arte_input.setRange(0, 9999.99)
         self.arte_input.setDecimals(2)
-        self.arte_input.setValue(26.00)  # Valor padrão
+        self.arte_input.setValue(30.00)  # Valor padrão
         self.arte_input.valueChanged.connect(self.calcular_total)
         valores_layout.addWidget(self.arte_input)
         
