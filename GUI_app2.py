@@ -119,7 +119,7 @@ class OrcamentoPrintai3D(QMainWindow):
         self.preco_peca_input = QDoubleSpinBox()
         self.preco_peca_input.setDecimals(2)
         self.preco_peca_input.setRange(0.00, 9999.99)
-        self.preco_peca_input.setValue(9999.99)  # R$ como padrão
+        self.preco_peca_input.setValue(0.00)  # R$ como padrão
         self.preco_peca_input.setPrefix("R$ ")
         pecas_layout.addWidget(self.preco_peca_input)
         
@@ -177,7 +177,7 @@ class OrcamentoPrintai3D(QMainWindow):
         self.arte_input = QDoubleSpinBox()
         self.arte_input.setRange(0, 9999.99)
         self.arte_input.setDecimals(2)
-        self.arte_input.setValue(9999.99)  # Valor padrão
+        self.arte_input.setValue(0.00)  # Valor padrão
         self.arte_input.valueChanged.connect(self.calcular_total)
         valores_layout.addWidget(self.arte_input)
         
@@ -239,11 +239,11 @@ class OrcamentoPrintai3D(QMainWindow):
         self.calcular_total()
         
         # Limpar campos
-        # self.nome_peca_input.clear()
-        # self.filamento_input.clear()
-        self.horas_input.setValue(1)
-        self.minutos_input.setValue(30)
-        self.peso_input.setValue(10.0)
+        self.nome_peca_input.clear()
+        self.filamento_input.clear()
+        self.horas_input.setValue(0)
+        self.minutos_input.setValue(0)
+        self.peso_input.setValue(00.0)
         
     def remover_peca(self):
         """Remove a peça selecionada da tabela"""
@@ -416,9 +416,9 @@ class OrcamentoPrintai3D(QMainWindow):
             self.filamento_input.clear()
             self.horas_input.setValue(1)
             self.minutos_input.setValue(30)
-            self.peso_input.setValue(10.0)
-            self.preco_peca_input.setValue(15.00)
-            self.arte_input.setValue(30.00)
+            self.peso_input.setValue(00.0)
+            self.preco_peca_input.setValue(0.00)
+            self.arte_input.setValue(0.00)
             self.atualizar_tabela()
             self.calcular_total()
 
