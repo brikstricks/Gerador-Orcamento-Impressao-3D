@@ -205,10 +205,3 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 ## 👨‍💻 Autor
 
 **Desenvolvido com ❤️ para a comunidade de impressão 3D**
-
-## 🙏 Agradecimentos
-
-- Comunidade Python Brasil
-- Desenvolvedores do PyQt5 e fpdf2
-- Beta testers da versão inicial
-- Makers e entusiastas da impressão 3D
