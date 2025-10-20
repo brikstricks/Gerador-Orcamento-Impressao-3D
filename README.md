@@ -23,7 +23,7 @@ Sistema completo para geração de orçamentos de impressão 3D com interface gr
 
 ## 🎯 Sobre o Projeto
 
-O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para automatizar a criação de orçamentos profissionais para serviços de impressão 3D. 
+O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para automatizar a criação de orçamentos profissionais para serviços de impressão 3D.
 
 ### ✨ Por que usar este sistema?
 
@@ -38,7 +38,7 @@ O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para
 ### ✅ Implementadas
 
 - **Interface Gráfica Moderna**: Desenvolvida com PyQt5
-- **Cadastro de Peças**: 
+- **Cadastro de Peças**:
   - Nome da peça
   - Tipo/cor do filamento
   - Tempo de impressão (horas e minutos)
@@ -46,7 +46,7 @@ O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para
   - Valor individual por peça
 - **Cálculos Automáticos**: Subtotais, total de peças e valor final
 - **Arte Aplicada**: Campo configurável para mão de obra
-- **Exportação PDF**: 
+- **Exportação PDF**:
   - Logo personalizada da Printaí 3D
   - Layout profissional
   - Tabela organizada
@@ -64,12 +64,12 @@ O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para
 
 ## 🛠️ Tecnologias Utilizadas
 
-| Tecnologia | Versão | Finalidade |
-|------------|---------|------------|
-| **Python** | 3.8+ | Linguagem principal |
-| **PyQt5** | 5.15+ | Interface gráfica |
-| **fpdf2** | Latest | Geração de PDFs |
-| **pandas** | 1.3+ | Manipulação de dados |
+| Tecnologia       | Versão | Finalidade             |
+| ---------------- | ------- | ---------------------- |
+| **Python** | 3.8+    | Linguagem principal    |
+| **PyQt5**  | 5.15+   | Interface gráfica     |
+| **fpdf2**  | Latest  | Geração de PDFs      |
+| **pandas** | 1.3+    | Manipulação de dados |
 
 ## 📋 Pré-requisitos
 
@@ -88,42 +88,6 @@ python3 --version
 ```
 
 Se não tiver o Python instalado, baixe em: https://python.org/downloads/
-
-## 🔧 Instalação
-
-### 1. Clone ou baixe o projeto
-
-```bash
-# Opção 1: Clone via git
-git clone https://github.com/seu-usuario/printai-3d-orcamentos.git
-cd printai-3d-orcamentos
-
-# Opção 2: Baixe o arquivo .zip e extraia
-```
-
-### 2. Crie um ambiente virtual (recomendado)
-
-```bash
-# Windows
-python -m venv venv
-venv\Scripts\activate
-
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Instale as dependências
-
-```bash
-pip install fpdf2 pandas PyQt5
-```
-
-### 4. Execute o programa
-
-```bash
-python printai_3d_orcamentos.py
-```
 
 ## 📖 Como Usar
 
@@ -199,23 +163,6 @@ Arte Aplicada: R$ 30,00
 TOTAL FINAL: R$ 110,00
 ```
 
-## 📁 Estrutura do Projeto
-
-```
-printai-3d-orcamentos/
-│
-├── printai_3d_orcamentos.py    # Arquivo principal
-├── README.md                   # Documentação
-├── requirements.txt            # Dependências
-├── docs/                       # Documentação adicional
-│   ├── interface-principal.png
-│   └── exemplo-pdf.png
-├── examples/                   # Exemplos de PDFs gerados
-│   ├── orcamento-exemplo-1.pdf
-│   └── orcamento-exemplo-2.pdf
-└── venv/                      # Ambiente virtual (criado na instalação)
-```
-
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas! Aqui está como você pode ajudar:
@@ -228,73 +175,24 @@ Contribuições são bem-vindas! Aqui está como você pode ajudar:
 - ✨ Novas funcionalidades
 - 🧪 Testes automatizados
 
-## 🆘 Solução de Problemas
-
-### ❌ Erro: "ModuleNotFoundError: No module named 'PyQt5'"
-
-**Solução:**
-```bash
-pip install PyQt5
-```
-
-### ❌ Erro: "ModuleNotFoundError: No module named 'fpdf'"
-
-**Solução:**
-```bash
-pip install fpdf2
-```
-
-### ❌ Erro ao gerar PDF: "Permission denied"
-
-**Causas possíveis:**
-- PDF já está aberto em outro programa
-- Pasta de destino sem permissão de escrita
-
-**Solução:**
-- Feche o PDF se estiver aberto
-- Escolha outra pasta para salvar
-- Execute como administrador (Windows)
-
-### ❌ Interface não abre ou fica em branco
-
-**Solução:**
-```bash
-# Reinstale o PyQt5
-pip uninstall PyQt5
-pip install PyQt5
-```
-
-### ❌ Caracteres especiais não aparecem no PDF
-
-**Solução:**
-- Evite acentos nos nomes das peças
-- Use apenas caracteres ASCII no nome do projeto
-
-### 🔍 Debug Mode
-
-Para ver erros detalhados, execute:
-
-```bash
-python printai_3d_orcamentos.py
-```
-
-Os erros aparecerão no terminal.
-
 ## 🗺️ Roadmap
 
 ### Versão 1.1 (Próxima)
+
 - [ ] Banco de dados SQLite para histórico
 - [ ] Backup automático dos dados
 - [ ] Templates de peças frequentes
 - [ ] Configurações salvas do usuário
 
 ### Versão 1.2 (Futura)
+
 - [ ] Cadastro completo de clientes
 - [ ] Relatórios de vendas mensais
 - [ ] Múltiplos templates de PDF
 - [ ] Sistema de descontos automáticos
 
 ### Versão 2.0 (Longo Prazo)
+
 - [ ] Interface web com Flask
 - [ ] API REST para integração
 - [ ] Sistema multi-usuário
