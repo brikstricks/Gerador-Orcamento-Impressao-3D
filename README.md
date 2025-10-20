@@ -7,20 +7,6 @@ Sistema completo para geração de orçamentos de impressão 3D com interface gr
 ![PDF](https://img.shields.io/badge/PDF-Export-red.svg)
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow.svg)
 
-## 📋 Índice
-
-- [Sobre o Projeto](#-sobre-o-projeto)
-- [Funcionalidades](#-funcionalidades)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Pré-requisitos](#-pré-requisitos)
-- [Instalação](#-instalação)
-- [Como Usar](#-como-usar)
-- [Exemplos de Uso](#-exemplos-de-uso)
-- [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Contribuição](#-contribuição)
-- [Solução de Problemas](#-solução-de-problemas)
-- [Roadmap](#-roadmap)
-
 ## 🎯 Sobre o Projeto
 
 O **Sistema Printaí 3D** é uma aplicação desktop desenvolvida em Python para automatizar a criação de orçamentos profissionais para serviços de impressão 3D.
