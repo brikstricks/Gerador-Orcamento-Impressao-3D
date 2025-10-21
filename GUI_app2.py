@@ -394,7 +394,7 @@ class OrcamentoPrintai3D(QMainWindow):
         pdf.ln(15)
         pdf.set_font("Arial", 'I', 8)
         pdf.set_text_color(100, 100, 100)
-        pdf.cell(0, 5, "Orçamento válido por 30 dias. Valores sujeitos a alteração sem aviso prévio.", ln=True, align='C')
+        pdf.cell(0, 5, "Orçamento válido por 30 dias. Valores sujeitos a alteração com aprovação do cliente.", ln=True, align='C')
         pdf.cell(0, 5, f"Gerado em {datetime.now().strftime('%d/%m/%Y às %H:%M')} pelo Sistema Printaí 3D", ln=True, align='C')
         
         # Salvar PDF
